@@ -73,6 +73,39 @@
   gap: 1rem;
 }
 
+.settings-item.sub-item {
+  padding-left: 1.5rem;
+  padding-top: 0;
+  border-top: none;
+  margin-top: -12px;
+}
+
+.settings-freq-toggle {
+  display: flex;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.05);
+  padding: 4px;
+  border-radius: 20px;
+}
+
+.freq-btn {
+  border: none;
+  background: transparent;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 0.85rem;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.freq-btn.active {
+  background: white;
+  color: #333;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-weight: 600;
+}
+
 .settings-label {
   font-size: 1rem;
   color: var(--text);

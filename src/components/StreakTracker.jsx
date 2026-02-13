@@ -16,7 +16,7 @@ function getBadge(streak) {
   return BADGES[0]
 }
 
-export default function StreakTracker({ streak, totalCompleted, justIncreased }) {
+export default function StreakTracker({ streak, totalCompleted, weeklyCount, monthlyCount, justIncreased }) {
   const badge = getBadge(streak)
 
   return (
@@ -27,6 +27,17 @@ export default function StreakTracker({ streak, totalCompleted, justIncreased })
         <span className="streak-label">day{streak !== 1 ? 's' : ''} streak</span>
       </div>
       <div className="streak-badge">{badge.label}</div>
+      <div className="streak-stats">
+        <div className="stat-item" title="Days this week">
+          <span className="stat-label">Week</span>
+          <span className="stat-val">{weeklyCount || 0}</span>
+        </div>
+        <div className="stat-separator">/</div>
+        <div className="stat-item" title="Days this month">
+          <span className="stat-label">Month</span>
+          <span className="stat-val">{monthlyCount || 0}</span>
+        </div>
+      </div>
       {totalCompleted > 0 && (
         <div className="streak-total">{totalCompleted} task{totalCompleted !== 1 ? 's' : ''} completed</div>
       )}

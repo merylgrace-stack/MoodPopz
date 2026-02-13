@@ -6,12 +6,14 @@ import MoodSelector from './MoodSelector'
 import SpinWheel from './SpinWheel'
 import SingleTaskView from './SingleTaskView'
 import QuoteView from './QuoteView'
-import WhisperingWaves from './WhisperingWaves'
+import FrequencyWave from './FrequencyWave'
 import StreakRing from './StreakRing'
 import SettingsDrawer from './SettingsDrawer'
+import LoginPage from './LoginPage'
 import './MainApp.css'
 
 export default function MainApp({ onReset, initialMood }) {
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [phase, setPhase] = useState(initialMood ? 'wheel' : 'moods')
   const [selectedMood, setSelectedMood] = useState(initialMood || null)
   const [tasks, setTasks] = useState(
@@ -21,18 +23,36 @@ export default function MainApp({ onReset, initialMood }) {
   const [selectedTask, setSelectedTask] = useState(null)
   const [quote, setQuote] = useState('')
   const [settingsOpen, setSettingsOpen] = useState(false)
-  const { streak, totalCompleted, recordCompletion } = useStreak()
-  const { enabled: musicEnabled, toggle: toggleMusic } = useMusic()
+  const { streak, totalCompleted, recordCompletion, weeklyCount, monthlyCount } = useStreak()
+  const { enabled: musicEnabled, toggle: toggleMusic, frequency, setFrequency, analyser } = useMusic()
   const [entryQuote, setEntryQuote] = useState(() =>
     ENTRY_QUOTES[Math.floor(Math.random() * ENTRY_QUOTES.length)]
   )
 
+  useEffect(() => {
+    // Check login
+    const user = localStorage.getItem('moodpop_user')
+    if (user) setIsLoggedIn(true)
+  }, [])
 
   useEffect(() => {
     if (phase === 'moods') {
       setEntryQuote(ENTRY_QUOTES[Math.floor(Math.random() * ENTRY_QUOTES.length)])
     }
   }, [phase])
+
+  function handleLogin() {
+    localStorage.setItem('moodpop_user', 'true')
+    setIsLoggedIn(true)
+  }
+
+  function handleLogout() {
+    if (confirm('Are you sure you want to log out?')) {
+      localStorage.removeItem('moodpop_user')
+      setIsLoggedIn(false)
+      setSettingsOpen(false)
+    }
+  }
 
   function handleMoodSelect(mood) {
     setSelectedMood(mood)
@@ -72,14 +92,20 @@ export default function MainApp({ onReset, initialMood }) {
     setSelectedTask(null)
   }
 
+  if (!isLoggedIn) {
+    return <LoginPage onLogin={handleLogin} />
+  }
+
   if (phase === 'quote') {
     return (
       <>
-        <WhisperingWaves />
+        <FrequencyWave analyser={analyser} moodId={selectedMood?.id} />
         <QuoteView
           quote={quote}
           streak={streak}
           totalCompleted={totalCompleted}
+          weeklyCount={weeklyCount}
+          monthlyCount={monthlyCount}
           completedTask={selectedTask}
           onContinue={handleQuoteDone}
           onReset={onReset}
@@ -91,7 +117,7 @@ export default function MainApp({ onReset, initialMood }) {
   if (phase === 'task' && selectedTask) {
     return (
       <>
-        <WhisperingWaves />
+        <FrequencyWave analyser={analyser} moodId={selectedMood?.id} />
         <SingleTaskView
           mood={selectedMood}
           task={selectedTask}
@@ -110,7 +136,7 @@ export default function MainApp({ onReset, initialMood }) {
   if (phase === 'wheel' && selectedMood && tasks.length > 0) {
     return (
       <>
-        <WhisperingWaves />
+        <FrequencyWave analyser={analyser} moodId={selectedMood?.id} />
         <main id="main" className="breath-wheel-view" role="main">
           <button
             className="breath-btn breath-back"
@@ -142,7 +168,7 @@ export default function MainApp({ onReset, initialMood }) {
 
   return (
     <main id="main" className="breath-main breath-home-vintage" role="main">
-      <WhisperingWaves />
+      <FrequencyWave analyser={analyser} />
       <header className="breath-header">
         <StreakRing streak={streak} totalCompleted={totalCompleted} />
         <button
@@ -178,6 +204,9 @@ export default function MainApp({ onReset, initialMood }) {
         onClose={() => setSettingsOpen(false)}
         musicEnabled={musicEnabled}
         onMusicToggle={toggleMusic}
+        frequency={frequency}
+        onFrequencyChange={setFrequency}
+        onLogout={handleLogout}
         onFreshStart={() => {
           setPhase('moods')
           setSelectedMood(null)

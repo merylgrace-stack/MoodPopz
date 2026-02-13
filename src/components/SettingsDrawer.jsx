@@ -1,6 +1,6 @@
 import './SettingsDrawer.css'
 
-export default function SettingsDrawer({ open, onClose, musicEnabled, onMusicToggle, onFreshStart }) {
+export default function SettingsDrawer({ open, onClose, musicEnabled, onMusicToggle, frequency, onFrequencyChange, onLogout, onFreshStart }) {
   return (
     <>
       <div
@@ -43,6 +43,25 @@ export default function SettingsDrawer({ open, onClose, musicEnabled, onMusicTog
               <span className="toggle-track" />
             </button>
           </div>
+          {musicEnabled && (
+            <div className="settings-item sub-item">
+              <label className="settings-label">Frequency</label>
+              <div className="settings-freq-toggle">
+                <button
+                  className={`freq-btn ${frequency === '528Hz' ? 'active' : ''}`}
+                  onClick={() => onFrequencyChange('528Hz')}
+                >
+                  528Hz
+                </button>
+                <button
+                  className={`freq-btn ${frequency === '432Hz' ? 'active' : ''}`}
+                  onClick={() => onFrequencyChange('432Hz')}
+                >
+                  432Hz
+                </button>
+              </div>
+            </div>
+          )}
           <div className="settings-item">
             <p className="settings-note">
               <span aria-hidden>♿</span> Reduced motion respects your system preference.
@@ -55,6 +74,7 @@ export default function SettingsDrawer({ open, onClose, musicEnabled, onMusicTog
                 localStorage.removeItem('moodpop_streak')
                 localStorage.removeItem('moodpop_lastCompletedDate')
                 localStorage.removeItem('moodpop_totalCompleted')
+                localStorage.removeItem('moodpop_history')
                 localStorage.removeItem('moodpop_feedback')
                 onFreshStart?.()
                 onClose()
@@ -62,6 +82,12 @@ export default function SettingsDrawer({ open, onClose, musicEnabled, onMusicTog
             }}
           >
             Fresh Start
+          </button>
+          <button
+            className="settings-logout"
+            onClick={onLogout}
+          >
+            Log Out
           </button>
         </div>
       </aside>

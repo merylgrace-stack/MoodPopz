@@ -49,14 +49,14 @@
 
 .wheel-segment-text {
   font-family: 'Inter', system-ui, sans-serif;
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 500;
   fill: #3D3228;
 }
 
 @media (min-width: 480px) {
   .wheel-segment-text {
-    font-size: 11px;
+    font-size: 10px;
   }
 }
 

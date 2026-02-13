@@ -13,5 +13,5 @@ export function getTimerFromTask(task) {
 
 export function isDoodleTask(task) {
   if (!task || typeof task !== 'string') return false
-  return /doodle|draw|photo/i.test(task)
+  return /doodle|draw|trace|sketch|line|shape|circle|square|triangle|spiral/i.test(task)
 }
