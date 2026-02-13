@@ -1,0 +1,213 @@
+/* MOOD POP — Luxurious Micro-Therapy Home Page */
+
+.moodpop-home {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.moodpop-home-inner {
+  width: 100%;
+  max-width: 560px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Hero Section — 100vh feel, centered, breathing room */
+.moodpop-hero {
+  position: relative;
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 3rem 1.5rem;
+}
+
+.moodpop-hero-halo {
+  position: absolute;
+  width: 120%;
+  height: 140%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    ellipse 60% 50% at 50% 50%,
+    rgba(232, 240, 254, 0.35) 0%,
+    rgba(212, 228, 211, 0.15) 40%,
+    transparent 70%
+  );
+  pointer-events: none;
+  animation: haloPulse 8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .moodpop-hero-halo {
+    animation: none;
+  }
+}
+
+@keyframes haloPulse {
+  0%, 100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 0.85; transform: translate(-50%, -50%) scale(1.02); }
+}
+
+.moodpop-hero-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(2.25rem, 9vw, 3.5rem);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: 1rem;
+  position: relative;
+  z-index: 1;
+  animation: heroFadeIn 2s ease-out;
+}
+
+.moodpop-hero-subtext {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--text-soft);
+  max-width: 320px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  opacity: 0;
+  animation: heroSubtextIn 1.2s ease-out 0.6s forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .moodpop-hero-title,
+  .moodpop-hero-subtext {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+@keyframes heroFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroSubtextIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mood Entry Area — soft cards, timed fade-in */
+.moodpop-moods {
+  padding: 2rem 0 4rem;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+}
+
+.moodpop-moods.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .moodpop-moods {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+.moodpop-moods-hint {
+  font-size: 0.9rem;
+  color: var(--text-soft);
+  text-align: center;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.02em;
+}
+
+.moodpop-mood-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.9rem;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+@media (min-width: 420px) {
+  .moodpop-mood-grid {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 460px;
+  }
+}
+
+.moodpop-mood-pill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 1.25rem 1rem;
+  border: none;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  transition:
+    transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.5s ease,
+    background 0.5s ease;
+}
+
+.moodpop-mood-pill:hover {
+  transform: scale(1.04) translateY(-2px);
+  background: rgba(255, 255, 255, 0.65);
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.08),
+    0 0 0 1px rgba(255, 255, 255, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.moodpop-mood-pill:focus-visible {
+  outline: 2px solid var(--sage);
+  outline-offset: 2px;
+}
+
+.moodpop-mood-pill:active {
+  transform: scale(1.01);
+}
+
+.moodpop-mood-icon {
+  font-size: 1.75rem;
+  line-height: 1;
+  filter: grayscale(0.1);
+}
+
+.moodpop-mood-label {
+  font-size: 0.9rem;
+  letter-spacing: 0.01em;
+}

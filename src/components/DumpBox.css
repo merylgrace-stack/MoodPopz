@@ -1,0 +1,114 @@
+.dump-box-wrap {
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.dump-box-prompt {
+  font-size: 0.95rem;
+  color: var(--text-soft);
+  margin-bottom: 0.75rem;
+}
+
+.dump-box {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: var(--radius);
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  resize: vertical;
+  min-height: 100px;
+  transition: border-color var(--transition);
+}
+
+.dump-box:focus {
+  outline: none;
+  border-color: var(--sage);
+}
+
+.dump-box::placeholder {
+  color: var(--text-soft);
+  opacity: 0.7;
+}
+
+.dump-box-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.dump-btn {
+  flex: 1;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.dump-btn.skip {
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  color: var(--text-soft);
+}
+
+.dump-btn.skip:hover {
+  border-color: var(--sage);
+  color: var(--text);
+}
+
+.dump-btn.done {
+  background: var(--sage);
+  border: none;
+  color: var(--text);
+}
+
+.dump-btn.done:hover {
+  opacity: 0.95;
+}
+
+/* Fullscreen dump for Overthinking */
+.dump-box-fullscreen {
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(20px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  animation: dumpFadeIn 0.4s ease-out;
+}
+
+.dump-box-fullscreen-inner {
+  max-width: 560px;
+  width: 100%;
+  background: var(--glass);
+  backdrop-filter: blur(var(--glass-blur));
+  border-radius: var(--radius);
+  padding: 2rem;
+  box-shadow: var(--shadow);
+}
+
+.dump-box-breathing {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+@keyframes dumpFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

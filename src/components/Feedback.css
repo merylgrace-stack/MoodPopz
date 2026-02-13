@@ -1,0 +1,74 @@
+.breath-feedback {
+  padding: 1.5rem;
+  background: var(--glass);
+  backdrop-filter: blur(var(--glass-blur));
+  border-radius: var(--radius);
+  margin-bottom: 1rem;
+  animation: breathFadeIn 0.5s ease-out;
+}
+
+.breath-feedback-prompt {
+  font-size: 1rem;
+  color: var(--text);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.breath-feedback-ratings {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.breath-feedback-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 0, 0, 0.08);
+  background: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.breath-feedback-btn:hover {
+  transform: scale(1.1);
+  border-color: var(--sage);
+}
+
+.breath-feedback-btn.selected {
+  border-color: var(--sage);
+  background: rgba(212, 228, 211, 0.4);
+  transform: scale(1.1);
+}
+
+.breath-feedback-thanks {
+  font-size: 0.95rem;
+  color: var(--text-soft);
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.breath-feedback-submit {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--sage);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.breath-feedback-submit:hover:not(:disabled) {
+  opacity: 0.95;
+}
+
+.breath-feedback-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

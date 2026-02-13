@@ -1,0 +1,72 @@
+/* One Small Breath — Design System */
+:root {
+  /* Colors */
+  --lavender-blue: #E8F0FE;
+  --sage: #D4E4D3;
+  --beige: #FFF8E7;
+  --tired-blue: #A7C7E7;
+  --bored-green: #B2D8B2;
+  --text: #2D3748;
+  --text-soft: #4A5568;
+  
+  /* Effects */
+  --radius: 32px;
+  --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  --transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  --glass: rgba(255, 255, 255, 0.1);
+  --glass-blur: 20px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 20px;
+  line-height: 1.5;
+  color: var(--text);
+  background: linear-gradient(135deg, var(--lavender-blue) 0%, var(--sage) 50%, var(--beige) 100%);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* Focus styles for WCAG 2.2 AA */
+:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 2px;
+}
+
+/* Skip link for screen readers */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--text);
+  color: white;
+  padding: 0.5rem 1rem;
+  z-index: 1000;
+  transition: top 0.2s;
+}
+
+.skip-link:focus {
+  top: 0;
+}

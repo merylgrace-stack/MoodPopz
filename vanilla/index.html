@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>One Small Thing — Spin for one small task</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <!-- Frequency wave background -->
+  <div class="wave-bg" aria-hidden="true"></div>
+
+  <main id="main" role="main">
+    <!-- Landing -->
+    <section id="landing" class="screen active">
+      <h1 class="hero">Feeling off?<br><span class="hero-accent">Spin for one small thing.</span></h1>
+      <p class="tagline">A gentle nudge when you need it</p>
+      <button class="btn-cta" id="btn-start">Take a breath</button>
+    </section>
+
+    <!-- Mood selection -->
+    <section id="moods" class="screen">
+      <header class="header">
+        <div class="streak-display">
+          <span class="streak-count" id="streak-count">0</span>
+          <span class="streak-label">day streak</span>
+        </div>
+        <button class="btn-reset" id="btn-home">Home</button>
+      </header>
+      <h2 class="title">How's your head feeling?</h2>
+      <p class="subtitle">Click a mood — the wheel picks one small thing</p>
+      <div class="mood-grid" id="mood-grid"></div>
+      <button class="btn-random" id="btn-random">✨ Give me one small thing</button>
+    </section>
+
+    <!-- Spin wheel -->
+    <section id="wheel" class="screen">
+      <button class="btn-back" id="btn-back-wheel">Back</button>
+      <div class="wheel-content">
+        <div class="mood-card-expanded" id="mood-expanded"></div>
+        <p class="wheel-prompt">Ready to spin?</p>
+        <div class="wheel-wrap">
+          <div class="wheel-pointer">▼</div>
+          <div class="wheel" id="wheel-el"></div>
+        </div>
+        <p class="wheel-result" id="wheel-result"></p>
+      </div>
+    </section>
+
+    <!-- Task reveal -->
+    <section id="task" class="screen">
+      <button class="btn-back" id="btn-back-task">Back</button>
+      <div class="task-popup">
+        <h2 class="task-mood" id="task-mood"></h2>
+        <div class="task-card">
+          <p class="task-label">Your tiny task:</p>
+          <p class="task-text" id="task-text"></p>
+          <div class="dump-wrap" id="dump-wrap" hidden>
+            <p class="dump-prompt">Dump thoughts here — nothing saved 💨</p>
+            <textarea class="dump-box" id="dump-box" placeholder="Type anything — nothing is saved" rows="4"></textarea>
+            <div class="breathing-dot"></div>
+          </div>
+          <p class="nudge">Done? Next?</p>
+          <button class="btn-done" id="btn-done">✓ Done</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quote + Feedback -->
+    <section id="quote" class="screen">
+      <button class="btn-back" id="btn-home-quote">Home</button>
+      <div class="quote-content">
+        <div class="streak-display quote-streak">
+          <span class="streak-count" id="quote-streak-count">0</span>
+          <span class="streak-label">day streak</span>
+        </div>
+        <blockquote class="quote-text" id="quote-text"></blockquote>
+        <div class="hearts" aria-hidden="true">💚 💛 💚</div>
+        <div class="feedback">
+          <p class="feedback-prompt">How did that feel?</p>
+          <div class="feedback-ratings">
+            <button type="button" class="feedback-btn" data-rating="5" aria-label="Great">😌</button>
+            <button type="button" class="feedback-btn" data-rating="4" aria-label="Good">👍</button>
+            <button type="button" class="feedback-btn" data-rating="3" aria-label="Okay">🙂</button>
+            <button type="button" class="feedback-btn" data-rating="2" aria-label="Meh">😐</button>
+            <button type="button" class="feedback-btn" data-rating="1" aria-label="Hard">😔</button>
+          </div>
+          <p class="feedback-thanks">Thanks — you're doing great.</p>
+          <button class="btn-continue" id="btn-continue">Choose again ✨</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

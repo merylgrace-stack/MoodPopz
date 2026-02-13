@@ -1,0 +1,35 @@
+.spin-wheel-container.breath {
+  padding: 1.5rem;
+}
+
+.spin-wheel-wrapper.breath {
+  padding-top: 20px;
+}
+
+.spin-wheel.breath {
+  width: min(400px, 85vw);
+  height: min(400px, 85vw);
+  border-radius: 50%;
+  box-shadow: var(--shadow), inset 0 0 0 6px rgba(255, 255, 255, 0.8);
+  transition: transform 4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.spin-wheel .wheel-center.breath {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 48px;
+  height: 48px;
+  margin: -24px 0 0 -24px;
+  background: var(--beige);
+  border-radius: 50%;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+.wheel-result.breath strong {
+  color: var(--text);
+}
+
+.wheel-hint.breath {
+  color: var(--text-soft);
+}

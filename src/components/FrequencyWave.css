@@ -1,0 +1,45 @@
+.frequency-wave {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 180px;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.frequency-wave svg {
+  width: 100%;
+  height: 100%;
+  animation: waveFloat 6s ease-in-out infinite;
+}
+
+.frequency-wave.pulse svg {
+  animation: waveFloat 6s ease-in-out infinite, wavePulse 2s ease-in-out;
+}
+
+.wave-path {
+  opacity: 0.7;
+  transform-origin: center;
+}
+
+.wave-2 {
+  animation-delay: -2s;
+  opacity: 0.5;
+}
+
+.wave-3 {
+  animation-delay: -4s;
+  opacity: 0.3;
+}
+
+@keyframes waveFloat {
+  0%, 100% { transform: translateY(0) scaleX(1); }
+  50% { transform: translateY(-8px) scaleX(1.02); }
+}
+
+@keyframes wavePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
