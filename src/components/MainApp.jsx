@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { MOODS, TASKS, ALL_TASKS, QUOTES, ENTRY_QUOTES } from '../data/moods'
 import { useStreak } from '../hooks/useStreak'
 import { useMusic } from '../hooks/useMusic'
+import { useMoodHistory } from '../hooks/useMoodHistory'
 import MoodSelector from './MoodSelector'
 import SpinWheel from './SpinWheel'
 import SingleTaskView from './SingleTaskView'
@@ -10,6 +11,8 @@ import FrequencyWave from './FrequencyWave'
 import StreakRing from './StreakRing'
 import SettingsDrawer from './SettingsDrawer'
 import LoginPage from './LoginPage'
+import InsightsView from './InsightsView'
+import AIChatModal from './AIChatModal'
 import './MainApp.css'
 
 export default function MainApp({ onReset, initialMood }) {
@@ -25,6 +28,11 @@ export default function MainApp({ onReset, initialMood }) {
   const [settingsOpen, setSettingsOpen] = useState(false)
   const { streak, totalCompleted, recordCompletion, weeklyCount, monthlyCount } = useStreak()
   const { enabled: musicEnabled, toggle: toggleMusic, frequency, setFrequency, analyser } = useMusic()
+  const { history, recordMood, slope } = useMoodHistory()
+
+  const [showInsights, setShowInsights] = useState(false)
+  const [showAIChat, setShowAIChat] = useState(false)
+
   const [entryQuote, setEntryQuote] = useState(() =>
     ENTRY_QUOTES[Math.floor(Math.random() * ENTRY_QUOTES.length)]
   )
@@ -56,6 +64,7 @@ export default function MainApp({ onReset, initialMood }) {
 
   function handleMoodSelect(mood) {
     setSelectedMood(mood)
+    recordMood(mood)
     setTasks(TASKS[mood.id] || [])
     setSelectedTask(null)
     setPhase('wheel')
@@ -92,8 +101,30 @@ export default function MainApp({ onReset, initialMood }) {
     setSelectedTask(null)
   }
 
+  const chatModal = (
+    <AIChatModal
+      isOpen={showAIChat}
+      onClose={() => setShowAIChat(false)}
+    />
+  )
+
   if (!isLoggedIn) {
     return <LoginPage onLogin={handleLogin} />
+  }
+
+  if (showInsights) {
+    return (
+      <>
+        <FrequencyWave analyser={analyser} />
+        <InsightsView
+          history={history}
+          slope={slope}
+          onBack={() => setShowInsights(false)}
+          onTriggerCheckIn={() => setShowAIChat(true)}
+        />
+        {chatModal}
+      </>
+    )
   }
 
   if (phase === 'quote') {
@@ -110,6 +141,7 @@ export default function MainApp({ onReset, initialMood }) {
           onContinue={handleQuoteDone}
           onReset={onReset}
         />
+        {chatModal}
       </>
     )
   }
@@ -129,6 +161,7 @@ export default function MainApp({ onReset, initialMood }) {
           }}
           onReset={onReset}
         />
+        {chatModal}
       </>
     )
   }
@@ -162,6 +195,7 @@ export default function MainApp({ onReset, initialMood }) {
             />
           </div>
         </main>
+        {chatModal}
       </>
     )
   }
@@ -211,7 +245,16 @@ export default function MainApp({ onReset, initialMood }) {
           setPhase('moods')
           setSelectedMood(null)
         }}
+        onOpenInsights={() => {
+          setSettingsOpen(false)
+          setShowInsights(true)
+        }}
+        onOpenChat={() => {
+          setSettingsOpen(false)
+          setShowAIChat(true)
+        }}
       />
+      {chatModal}
     </main>
   )
 }

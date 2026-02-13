@@ -60,10 +60,18 @@ export function useMusic() {
     const sound = new Howl({
       src: [src],
       html5: true,
-      volume: 0,
+      volume: 1.0,
       loop: true,
       onload: () => {
-        sound.fade(0, 0.15, 2000)
+        // Play immediately at full volume
+      },
+      onloaderror: (id, err) => {
+        console.error('Music load error:', err)
+      },
+      onplayerror: (id, err) => {
+        sound.once('unlock', () => {
+          sound.play()
+        })
       }
     })
 

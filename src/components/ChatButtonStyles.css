@@ -1,0 +1,11 @@
+.settings-chat-btn {
+    margin-top: 0.5rem;
+    background: linear-gradient(135deg, #FFF8E7, #F5D0C5);
+    color: #5C4E3D;
+}
+
+.settings-chat-btn:hover {
+    background: linear-gradient(135deg, #FFF8E7, #F5C6AA);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(245, 208, 197, 0.4);
+}

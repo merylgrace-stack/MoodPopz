@@ -1,12 +1,13 @@
 /* Flowchart: Tired, Bored, Stressed, Overthinking, Frustrated, Other */
 
 export const MOODS = [
-  { id: 'tired', label: 'Tired', emoji: '😴', color: '#A7C7E7' },
-  { id: 'bored', label: 'Bored', emoji: '😐', color: '#B2D8B2' },
-  { id: 'stressed', label: 'Stressed', emoji: '😰', color: '#F5D0C5' },
-  { id: 'overthinking', label: 'Overthinking', emoji: '🌀', color: '#D4E4D3' },
-  { id: 'frustrated', label: 'Frustrated', emoji: '😤', color: '#F5C6AA' },
-  { id: 'other', label: 'Other / Unsure', emoji: '✨', color: '#FFF8E7' },
+  { id: 'tired', label: 'Tired', emoji: '😴', color: '#A7C7E7', score: 3 },
+  { id: 'bored', label: 'Bored', emoji: '😐', color: '#B2D8B2', score: 3 },
+  { id: 'stressed', label: 'Stressed', emoji: '😰', color: '#F5D0C5', score: 2 },
+  { id: 'overthinking', label: 'Overthinking', emoji: '🌀', color: '#D4E4D3', score: 2 },
+  { id: 'frustrated', label: 'Frustrated', emoji: '😤', color: '#F5C6AA', score: 1 },
+  { id: 'happy', label: 'Happy', emoji: '😄', color: '#FDFD96', score: 5 }, // Added Happy for completeness/testing if needed, though not in original list? Wait, original list: Tired, Bored, Stressed, Overthinking, Frustrated, Other.
+  { id: 'other', label: 'Other / Unsure', emoji: '✨', color: '#FFF8E7', score: 4 }, // Neutral/Positive
 ]
 
 export const TASKS = {

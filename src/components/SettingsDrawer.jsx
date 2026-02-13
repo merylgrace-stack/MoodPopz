@@ -1,6 +1,17 @@
 import './SettingsDrawer.css'
 
-export default function SettingsDrawer({ open, onClose, musicEnabled, onMusicToggle, frequency, onFrequencyChange, onLogout, onFreshStart }) {
+export default function SettingsDrawer({
+  open,
+  onClose,
+  musicEnabled,
+  onMusicToggle,
+  frequency,
+  onFrequencyChange,
+  onLogout,
+  onFreshStart,
+  onOpenInsights,
+  onOpenChat
+}) {
   return (
     <>
       <div
@@ -62,6 +73,20 @@ export default function SettingsDrawer({ open, onClose, musicEnabled, onMusicTog
               </div>
             </div>
           )}
+
+          <div className="settings-divider" />
+
+          <button className="settings-insights-btn" onClick={onOpenInsights}>
+            📊 Mood Insights
+          </button>
+
+          <button className="settings-insights-btn settings-chat-btn" onClick={onOpenChat}>
+            🤖 Chat with Companion
+          </button>
+
+
+
+          <div className="settings-divider" />
           <div className="settings-item">
             <p className="settings-note">
               <span aria-hidden>♿</span> Reduced motion respects your system preference.
