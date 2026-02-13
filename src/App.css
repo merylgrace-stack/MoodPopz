@@ -1,4 +1,172 @@
-.app {
+/* MAIN PLAYGROUND */
+.playground {
   min-height: 100vh;
+  background: #fff6e5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  overflow: hidden;
   position: relative;
+  font-family: "Comic Neue", "Poppins", sans-serif;
+}
+
+/* TEXT */
+.headline {
+  font-size: 3rem;
+  color: #ff7a7a;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  color: #555;
+}
+
+.footer-text {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #777;
+}
+
+/* MOOD CARDS */
+.mood-cards {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.mood-card {
+  background: white;
+  border-radius: 24px;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  animation: pulse 3.5s ease-in-out infinite;
+  transition: transform 0.3s ease;
+}
+
+.mood-card span {
+  font-size: 0.7rem;
+  margin-top: 6px;
+}
+
+.mood-card:hover {
+  animation: none;
+  transform: translateY(-10px) rotate(-2deg);
+}
+
+/* BUTTON */
+.magic-btn {
+  background: #6c63ff;
+  color: white;
+  border: none;
+  padding: 16px 34px;
+  border-radius: 40px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  animation: softWiggle 4s ease-in-out infinite;
+  position: relative;
+}
+
+.magic-btn:hover {
+  animation: none;
+  transform: scale(1.05);
+}
+
+/* FLOATING SHAPES */
+.floating-shape {
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  filter: blur(10px);
+  opacity: 0.4;
+  animation: floatSlow 10s ease-in-out infinite;
+}
+
+.pink {
+  background: #ffb6c1;
+  top: 10%;
+  left: 15%;
+}
+
+.blue {
+  background: #add8e6;
+  bottom: 15%;
+  right: 10%;
+  animation-delay: 2s;
+}
+
+.yellow {
+  background: #fff176;
+  top: 20%;
+  right: 25%;
+  animation-delay: 4s;
+}
+
+/* ANIMATIONS */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes floatSlow {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-40px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes softWiggle {
+  0%,100% { transform: rotate(0deg); }
+  25% { transform: rotate(1deg); }
+  75% { transform: rotate(-1deg); }
+}
+/* CONFETTI */
+.confetti-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 999;
+}
+
+.confetti-container::before {
+  content: "🎉 🎊 ✨ 💛 🌈 🎉 🎊 ✨ 💛 🌈";
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  font-size: 2rem;
+  animation: confettiFall 3s linear infinite;
+}
+
+@keyframes confettiFall {
+  0% {
+    transform: translateY(-10%);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110%);
+    opacity: 0;
+  }
+}
+
+/* Selected mood feedback */
+.mood-card.selected {
+  outline: 4px solid #6c63ff;
+  transform: scale(1.1);
 }
