@@ -22,11 +22,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500&family=Playfair+Display:wght@600&display=swap"
       rel="stylesheet"
     />
 
-    <!-- Base styles (minimal, rest handled by React/CSS) -->
+    <!-- Background: Kinetic Vintage — 35mm film grain, dust/scratches, light leaks -->
     <style>
       html, body {
         margin: 0;
@@ -34,40 +34,68 @@
         height: 100%;
         font-family: 'Inter', sans-serif;
         background: linear-gradient(
-          120deg,
-          #dbeafe,
-          #ede9fe,
-          #fef3c7
+          145deg,
+          #9CAF88 0%,
+          #E8DCC4 25%,
+          #D4A54A 50%,
+          #C4743C 75%,
+          #F5F0E6 100%
         );
-        overflow: hidden;
+        overflow-x: hidden;
       }
 
-      /* Subtle animated frequency wave background */
+      /* Light leaks — warm oranges & yellows, shift on interaction */
       .wave-bg {
         position: fixed;
         inset: 0;
         z-index: -1;
         background:
-          radial-gradient(circle at 20% 30%, rgba(167,199,231,0.25), transparent 40%),
-          radial-gradient(circle at 80% 70%, rgba(196,181,253,0.25), transparent 40%);
-        animation: float 18s ease-in-out infinite;
+          radial-gradient(ellipse 70% 50% at 15% 25%, rgba(255,180,80,0.45), transparent 45%),
+          radial-gradient(ellipse 55% 65% at 85% 75%, rgba(255,150,50,0.4), transparent 50%),
+          radial-gradient(ellipse 45% 45% at 50% 50%, rgba(220,165,90,0.25), transparent 55%);
+        animation: vintageFloat 22s ease-in-out infinite;
+        pointer-events: none;
       }
 
-      @keyframes float {
-        0% { transform: translateY(0); }
-        50% { transform: translateY(-20px); }
-        100% { transform: translateY(0); }
+      @keyframes vintageFloat {
+        0%, 100% { opacity: 1; transform: translateY(0) scale(1); }
+        50% { opacity: 0.92; transform: translateY(-15px) scale(1.02); }
       }
 
-      /* Gentle loading state */
+      /* Heavy 35mm film grain */
+      .wave-bg::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)'/%3E%3C/svg%3E");
+        opacity: 0.12;
+        pointer-events: none;
+      }
+
+      /* Dust and scratches overlay */
+      .wave-bg::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: repeating-linear-gradient(
+          90deg,
+          transparent 0,
+          transparent 1px,
+          rgba(255,255,255,0.02) 1px,
+          rgba(255,255,255,0.02) 2px
+        );
+        opacity: 0.6;
+        pointer-events: none;
+      }
+
       .loading {
         display: flex;
         align-items: center;
         justify-content: center;
         height: 100vh;
-        color: #334155;
+        color: #4A3C2A;
         font-size: 1rem;
-        opacity: 0.7;
+        opacity: 0.9;
       }
     </style>
   </head>

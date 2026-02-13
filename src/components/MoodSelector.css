@@ -21,23 +21,29 @@
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
-  transition: var(--transition);
+  transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
   box-shadow: var(--shadow);
 }
 
 .mood-card:hover {
-  transform: scale(1.02);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
-  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-8px) scale(1.05);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.mood-card-emoji {
+  font-size: 2rem;
+  display: inline-block;
+  transition: transform var(--transition);
+}
+
+.mood-card:hover .mood-card-emoji {
+  transform: scale(1.3);
 }
 
 .mood-card:focus-visible {
   outline: 2px solid var(--sage);
   outline-offset: 2px;
-}
-
-.mood-card-emoji {
-  font-size: 2rem;
 }
 
 .mood-card-label {

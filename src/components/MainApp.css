@@ -6,6 +6,38 @@
   z-index: 1;
 }
 
+/* Vintage Pinterest maximalist home page */
+.breath-home-vintage .breath-content {
+  max-width: 560px;
+}
+
+.breath-home-vintage .breath-title {
+  font-family: 'Playfair Display', serif;
+  color: #3D3228;
+}
+
+.breath-home-vintage .breath-subtitle {
+  color: #5C4E3D;
+}
+
+.breath-entry-quote {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  font-style: italic;
+  color: #3D3228;
+  margin-bottom: 1.5rem;
+  padding: 0.75rem 1rem;
+  background: rgba(245, 240, 230, 0.7);
+  border-radius: 12px;
+  border-left: 4px solid #9CAF88;
+}
+
+.breath-home-vintage .breath-btn {
+  background: rgba(245, 240, 230, 0.9);
+  color: #3D3228;
+  border: 1px solid rgba(61, 50, 40, 0.1);
+}
+
 .breath-header {
   display: flex;
   align-items: center;

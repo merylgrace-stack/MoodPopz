@@ -1,21 +1,17 @@
 import { useState } from 'react'
-import DumpBox from './DumpBox'
-import BreathingDot from './BreathingDot'
 import Confetti from './Confetti'
+import TaskActionContent from './TaskActionContent'
 import { playChime } from '../utils/sound'
 import './SingleTaskView.css'
 
 export default function SingleTaskView({
   mood,
   task,
-  showDumpBox,
-  dumpBoxPrompt,
   onTaskDone,
   onBack,
   onReset,
 }) {
   const [confettiTrigger, setConfettiTrigger] = useState(0)
-  const [dumpClosed, setDumpClosed] = useState(false)
   const [soundEnabled] = useState(() => {
     try {
       return localStorage.getItem('moodpop_sound') !== 'false'
@@ -44,21 +40,7 @@ export default function SingleTaskView({
         <div className="breath-task-card">
           <p className="breath-task-label">Your tiny task:</p>
           <p className="breath-task-text">{task}</p>
-          {showDumpBox && dumpBoxPrompt && mood?.id === 'overthinking' && !dumpClosed ? (
-            <DumpBox
-              prompt={dumpBoxPrompt}
-              onDone={() => setDumpClosed(true)}
-              fullscreen
-              inline={false}
-            />
-          ) : showDumpBox && dumpBoxPrompt && (mood?.id !== 'overthinking' || dumpClosed) ? (
-            mood?.id !== 'overthinking' && (
-              <div className="breath-dump-wrap">
-                <DumpBox prompt={dumpBoxPrompt} onDone={() => {}} inline />
-                <BreathingDot />
-              </div>
-            )
-          ) : null}
+          <TaskActionContent task={task} />
           <p className="breath-nudge">Done? Next?</p>
           <button
             className="breath-done-btn"

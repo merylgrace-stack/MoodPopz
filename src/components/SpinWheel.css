@@ -3,33 +3,101 @@
 }
 
 .spin-wheel-wrapper.breath {
-  padding-top: 20px;
+  padding-top: 12px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.wheel-pointer.breath {
+  position: relative;
+  z-index: 10;
+  margin-bottom: -8px;
+}
+
+.wheel-pointer-arrow {
+  display: inline-block;
+  font-size: 1.5rem;
+  color: #3D3228;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
 }
 
 .spin-wheel.breath {
-  width: min(400px, 85vw);
-  height: min(400px, 85vw);
+  width: min(420px, 88vw);
+  height: min(420px, 88vw);
   border-radius: 50%;
-  box-shadow: var(--shadow), inset 0 0 0 6px rgba(255, 255, 255, 0.8);
+  box-shadow:
+    0 8px 32px rgba(61, 50, 40, 0.15),
+    inset 0 0 0 8px rgba(255, 255, 255, 0.9);
   transition: transform 4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  overflow: visible;
+  position: relative;
+  border: 3px solid rgba(61, 50, 40, 0.08);
+}
+
+.wheel-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border-radius: 50%;
+}
+
+.wheel-segment-text-wrap {
+  pointer-events: none;
+}
+
+.wheel-segment-text {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  fill: #3D3228;
+}
+
+@media (min-width: 480px) {
+  .wheel-segment-text {
+    font-size: 11px;
+  }
 }
 
 .spin-wheel .wheel-center.breath {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 48px;
-  height: 48px;
-  margin: -24px 0 0 -24px;
-  background: var(--beige);
+  width: 56px;
+  height: 56px;
+  margin: -28px 0 0 -28px;
+  background: linear-gradient(145deg, #F5F0E6 0%, #E8DCC4 100%);
   border-radius: 50%;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  box-shadow:
+    0 2px 12px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(61, 50, 40, 0.1);
+}
+
+.wheel-center-label {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #3D3228;
+  letter-spacing: 0.05em;
+}
+
+.wheel-result.breath {
+  margin-top: 1rem;
+  font-size: 1rem;
 }
 
 .wheel-result.breath strong {
-  color: var(--text);
+  color: #3D3228;
 }
 
 .wheel-hint.breath {
-  color: var(--text-soft);
+  margin-top: 1rem;
+  color: #5C4E3D;
+  font-size: 0.95rem;
 }

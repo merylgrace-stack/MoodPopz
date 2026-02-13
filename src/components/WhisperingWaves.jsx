@@ -10,9 +10,9 @@ export default function WhisperingWaves() {
         />
         <defs>
           <linearGradient id="waveGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#E8F0FE" stopOpacity="0.25" />
-            <stop offset="50%" stopColor="#D4E4D3" stopOpacity="0.15" />
-            <stop offset="100%" stopColor="#FFF8E7" stopOpacity="0.2" />
+            <stop offset="0%" stopColor="#E8DCC4" stopOpacity="0.2" />
+            <stop offset="50%" stopColor="#9CAF88" stopOpacity="0.12" />
+            <stop offset="100%" stopColor="#D4A54A" stopOpacity="0.15" />
           </linearGradient>
         </defs>
       </svg>
@@ -23,8 +23,8 @@ export default function WhisperingWaves() {
         />
         <defs>
           <linearGradient id="waveGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#D4E4D3" stopOpacity="0.2" />
-            <stop offset="100%" stopColor="#E8F0FE" stopOpacity="0.1" />
+            <stop offset="0%" stopColor="#9CAF88" stopOpacity="0.15" />
+            <stop offset="100%" stopColor="#E8DCC4" stopOpacity="0.1" />
           </linearGradient>
         </defs>
       </svg>
@@ -35,8 +35,8 @@ export default function WhisperingWaves() {
         />
         <defs>
           <linearGradient id="waveGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#FFF8E7" stopOpacity="0.15" />
-            <stop offset="100%" stopColor="#D4E4D3" stopOpacity="0.1" />
+            <stop offset="0%" stopColor="#F5F0E6" stopOpacity="0.12" />
+            <stop offset="100%" stopColor="#C4A77D" stopOpacity="0.1" />
           </linearGradient>
         </defs>
       </svg>

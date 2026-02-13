@@ -1,0 +1,56 @@
+.task-action {
+  margin: 1rem 0;
+}
+
+.task-action-btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 10px;
+  background: var(--sage);
+  color: var(--text);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.task-action-breath {
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.task-action-breath-text {
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.task-action-calm,
+.task-action-text {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.task-action-timer {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 0.5rem;
+}
+
+.task-action-list {
+  text-align: left;
+  padding-left: 1.25rem;
+  line-height: 1.8;
+}
+
+.task-action-funfact {
+  font-style: italic;
+  padding: 1rem;
+  background: rgba(255,255,255,0.5);
+  border-radius: 10px;
+}
+
+.task-action-44 {
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+  letter-spacing: 0.05em;
+}

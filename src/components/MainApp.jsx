@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { MOODS, TASKS, RANDOM_TASKS, QUOTES } from '../data/moods'
+import { useState, useEffect } from 'react'
+import { MOODS, TASKS, ALL_TASKS, QUOTES, ENTRY_QUOTES } from '../data/moods'
 import { useStreak } from '../hooks/useStreak'
 import { useMusic } from '../hooks/useMusic'
 import MoodSelector from './MoodSelector'
@@ -11,30 +11,32 @@ import StreakRing from './StreakRing'
 import SettingsDrawer from './SettingsDrawer'
 import './MainApp.css'
 
-const MOODS_WITH_DUMP_BOX = ['overthinking', 'other']
-
-function pickRandomTasks(count = 6) {
-  const shuffled = [...RANDOM_TASKS].sort(() => Math.random() - 0.5)
-  return shuffled.slice(0, count)
-}
-
 export default function MainApp({ onReset, initialMood }) {
   const [phase, setPhase] = useState(initialMood ? 'wheel' : 'moods')
   const [selectedMood, setSelectedMood] = useState(initialMood || null)
   const [tasks, setTasks] = useState(
-    initialMood ? (initialMood.id === 'other' ? pickRandomTasks(6) : TASKS[initialMood.id] || []) : []
+    initialMood ? (TASKS[initialMood.id] || []) : []
   )
+  const [spinKey, setSpinKey] = useState(0)
   const [selectedTask, setSelectedTask] = useState(null)
   const [quote, setQuote] = useState('')
   const [settingsOpen, setSettingsOpen] = useState(false)
   const { streak, totalCompleted, recordCompletion } = useStreak()
   const { enabled: musicEnabled, toggle: toggleMusic } = useMusic()
+  const [entryQuote, setEntryQuote] = useState(() =>
+    ENTRY_QUOTES[Math.floor(Math.random() * ENTRY_QUOTES.length)]
+  )
 
-  const needsDumpBox = selectedMood && MOODS_WITH_DUMP_BOX.includes(selectedMood.id)
+
+  useEffect(() => {
+    if (phase === 'moods') {
+      setEntryQuote(ENTRY_QUOTES[Math.floor(Math.random() * ENTRY_QUOTES.length)])
+    }
+  }, [phase])
 
   function handleMoodSelect(mood) {
     setSelectedMood(mood)
-    setTasks(mood.id === 'other' ? pickRandomTasks(6) : TASKS[mood.id] || [])
+    setTasks(TASKS[mood.id] || [])
     setSelectedTask(null)
     setPhase('wheel')
   }
@@ -44,6 +46,16 @@ export default function MainApp({ onReset, initialMood }) {
   }
 
   function handleSpinComplete(task) {
+    if (task === 'Spin Again') {
+      setSpinKey((k) => k + 1)
+      return
+    }
+    if (task === 'Surprise Task') {
+      const pick = ALL_TASKS[Math.floor(Math.random() * ALL_TASKS.length)]
+      setSelectedTask(pick)
+      setPhase('task')
+      return
+    }
     setSelectedTask(task)
     setPhase('task')
   }
@@ -83,14 +95,6 @@ export default function MainApp({ onReset, initialMood }) {
         <SingleTaskView
           mood={selectedMood}
           task={selectedTask}
-          showDumpBox={needsDumpBox}
-          dumpBoxPrompt={
-            selectedMood?.id === 'overthinking'
-              ? "Dump thoughts here — nothing saved 💨"
-              : selectedMood?.id === 'other'
-                ? 'Optional: type anything — nothing saved.'
-                : null
-          }
           onTaskDone={handleTaskDone}
           onBack={() => {
             setPhase('moods')
@@ -125,6 +129,7 @@ export default function MainApp({ onReset, initialMood }) {
             </div>
             <p className="breath-wheel-prompt">Ready to spin?</p>
             <SpinWheel
+              key={spinKey}
               tasks={tasks}
               mood={selectedMood}
               onSpinComplete={handleSpinComplete}
@@ -136,7 +141,7 @@ export default function MainApp({ onReset, initialMood }) {
   }
 
   return (
-    <main id="main" className="breath-main" role="main">
+    <main id="main" className="breath-main breath-home-vintage" role="main">
       <WhisperingWaves />
       <header className="breath-header">
         <StreakRing streak={streak} totalCompleted={totalCompleted} />
@@ -156,6 +161,7 @@ export default function MainApp({ onReset, initialMood }) {
         </button>
       </header>
       <div className="breath-content">
+        <blockquote className="breath-entry-quote">"{entryQuote}"</blockquote>
         <h2 className="breath-title">How's your head feeling?</h2>
         <p className="breath-subtitle">Choose a mood — the wheel picks one small thing</p>
         <MoodSelector moods={MOODS} onSelect={handleMoodSelect} />
