@@ -4,16 +4,22 @@ import { LineChart, Line, ResponsiveContainer, XAxis, Tooltip } from 'recharts';
 import StreakTracker from "../components/StreakTracker";
 import AIChatModal from "../components/AIChatModal";
 import WhisperingWaves from "../components/WhisperingWaves";
-import MoodWheel from "../components/MoodWheel";
+import SpinWheel from "../components/SpinWheel";
+import SingleTaskView from "../components/SingleTaskView";
+import Confetti from "../components/Confetti";
 import { useStreak } from "../hooks/useStreak";
 import { useMusic } from "../hooks/useMusic";
 import { useMoodHistory } from "../hooks/useMoodHistory";
-import { useAIChat } from "../hooks/useAIChat";
+import { MOODS, TASKS } from "../data/moods"; // Import data
 import "./MoodPage.css";
 
 function MoodPage() {
+    const [view, setView] = useState('grid'); // 'grid' | 'wheel' | 'task'
     const [showConfetti, setShowConfetti] = useState(false);
+    const [confettiTrigger, setConfettiTrigger] = useState(0);
     const [selectedMood, setSelectedMood] = useState(null);
+    const [currentTasks, setCurrentTasks] = useState([]);
+    const [revealedTask, setRevealedTask] = useState(null);
     const [isChatOpen, setIsChatOpen] = useState(false);
 
     // Hooks
@@ -21,42 +27,45 @@ function MoodPage() {
     const { enabled: musicEnabled, toggle: toggleMusic } = useMusic();
     const { history, recordMood } = useMoodHistory();
 
-    const handleMoodSelect = (moodLabel) => {
-        setSelectedMood(moodLabel);
+    const handleMoodClick = (mood) => {
+        setSelectedMood(mood);
+        const tasksForMood = TASKS[mood.id] || TASKS['other'];
+        setCurrentTasks(tasksForMood);
+        setView('wheel');
     };
 
-    const handleButtonClick = () => {
-        if (!selectedMood) return;
+    const handleSpinComplete = (task) => {
+        setRevealedTask(task);
+        setTimeout(() => setView('task'), 1000); // Small delay to admire the wheel
+    };
 
+    const handleTaskCompletion = () => {
+        setConfettiTrigger(prev => prev + 1);
         setShowConfetti(true);
-
-        // Record actions
         recordCompletion();
-        const scores = { "Happy": 5, "Excited": 5, "Calm": 4, "Tired": 2, "Anxious": 1, "Sad": 1, "Meh": 3 };
-        recordMood({ id: selectedMood, label: selectedMood, score: scores[selectedMood] || 3 });
+        recordMood({ id: selectedMood.id, label: selectedMood.label, score: selectedMood.score });
 
-        // Stop confetti after 3 seconds
+        // Celebrate for a bit then go back? Or let user go back manually.
+        // Let's just show confetti and let them bask in it.
         setTimeout(() => {
             setShowConfetti(false);
-        }, 3000);
+            setView('grid');
+            setSelectedMood(null);
+            setRevealedTask(null);
+        }, 5000); // 5 seconds of glory
     };
 
-    // Format history for graph
+    const handleBackToGrid = () => {
+        setView('grid');
+        setSelectedMood(null);
+        setRevealedTask(null);
+    };
+
     const graphData = history.slice(-14).map(h => ({
         name: new Date(h.timestamp).toLocaleDateString(undefined, { weekday: 'short' }),
         score: h.score,
         mood: h.label
     }));
-
-    const moods = [
-        { label: "Happy", emoji: "⭐️" },
-        { label: "Excited", emoji: "🎉" },
-        { label: "Calm", emoji: "🌿" },
-        { label: "Meh", emoji: "☁️" },
-        { label: "Tired", emoji: "💤" },
-        { label: "Anxious", emoji: "🌀" },
-        { label: "Sad", emoji: "💧" }
-    ];
 
     return (
         <div className="mood-page-container">
@@ -64,11 +73,9 @@ function MoodPage() {
             <div className="decor-item decor-plant">🌿</div>
             <div className="decor-item decor-lamp">🛋️</div>
             <div className="decor-item decor-cloud">☁️</div>
-            <div className="decor-item decor-books">📚</div>
 
             <WhisperingWaves />
-
-            {showConfetti && <div className="confetti-container"></div>}
+            <Confetti trigger={confettiTrigger} />
 
             {/* Header */}
             <header className="mp-header">
@@ -90,87 +97,115 @@ function MoodPage() {
             </header>
 
             <div className="mp-dashboard">
-                {/* Main Section */}
                 <main className="mp-main">
-                    {/* Mood Wheel Card */}
-                    <section className="mp-card" style={{ paddingBottom: '3rem' }}>
-                        <h2 className="mp-card-title">
-                            {selectedMood
-                                ? `Feeling ${selectedMood}?`
-                                : "How's your head feeling?"}
-                        </h2>
 
-                        <MoodWheel
-                            moods={moods}
-                            selectedMood={selectedMood}
-                            onSelect={handleMoodSelect}
-                        />
+                    {/* VIEW: GRID (Default) */}
+                    {view === 'grid' && (
+                        <section className="mood-grid-section">
+                            <h2 className="section-title">How does your soul feel right now?</h2>
 
-                        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '2rem' }}>
-                            <button className="pop-btn" onClick={handleButtonClick} disabled={!selectedMood}>
-                                Give me a small thing ✨
-                            </button>
+                            <div className="pinterest-grid">
+                                {MOODS.map((mood) => (
+                                    <div
+                                        key={mood.id}
+                                        className="mood-card"
+                                        onClick={() => handleMoodClick(mood)}
+                                        style={{ '--mood-color': mood.color }}
+                                    >
+                                        <div className="mood-card-inner">
+                                            <div className="mood-card-front">
+                                                <span className="mood-emoji">{mood.emoji}</span>
+                                                <span className="mood-label">{mood.label}</span>
+                                            </div>
+                                            {/* No back needed now, clicking goes to wheel */}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {/* VIEW: WHEEL */}
+                    {view === 'wheel' && selectedMood && (
+                        <div className="wheel-view-container">
+                            <button className="back-btn-simple" onClick={handleBackToGrid}>← Back</button>
+                            <h2 className="section-title">Let fate decide, {selectedMood.label}.</h2>
+                            <SpinWheel
+                                tasks={currentTasks}
+                                mood={selectedMood}
+                                onSpinComplete={handleSpinComplete}
+                            />
                         </div>
-                    </section>
+                    )}
 
-                    {/* Graph Section */}
-                    <section className="mp-card">
-                        <h2 className="mp-card-title" style={{ marginBottom: '1rem', fontSize: '1.2rem' }}>Mood Flow</h2>
-                        <div className="graph-container">
-                            {graphData.length > 0 ? (
-                                <ResponsiveContainer width="100%" height="100%">
-                                    <LineChart data={graphData}>
-                                        <XAxis dataKey="name" stroke="#6D5E52" tick={{ fontSize: 10 }} />
-                                        <Tooltip
-                                            contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', background: 'rgba(255,255,255,0.9)' }}
-                                        />
-                                        <Line
-                                            type="monotone"
-                                            dataKey="score"
-                                            stroke="#DFA995"
-                                            strokeWidth={3}
-                                            dot={{ r: 4, fill: '#DFA995' }}
-                                            activeDot={{ r: 6 }}
-                                        />
-                                    </LineChart>
-                                </ResponsiveContainer>
-                            ) : (
-                                <p style={{ textAlign: 'center', color: 'var(--text-soft)', marginTop: '4rem', fontSize: '0.9rem' }}>
-                                    Track your mood to see your flow here.
-                                </p>
-                            )}
+                    {/* VIEW: TASK */}
+                    {view === 'task' && revealedTask && (
+                        <div className="task-view-container">
+                            <SingleTaskView
+                                mood={selectedMood}
+                                task={revealedTask}
+                                onTaskDone={handleTaskCompletion}
+                                onBack={handleBackToGrid}
+                            />
                         </div>
-                    </section>
+                    )}
+
+                    {/* Graph Section (Always visible or maybe hide during tasks?) */}
+                    {view === 'grid' && (
+                        <section className="mp-card graph-card">
+                            <h2 className="mp-card-title" style={{ marginBottom: 0 }}>Mood Flow</h2>
+                            <div className="graph-container">
+                                {graphData.length > 0 ? (
+                                    <ResponsiveContainer width="100%" height="100%">
+                                        <LineChart data={graphData}>
+                                            <XAxis dataKey="name" stroke="#6D5E52" tick={{ fontSize: 10 }} />
+                                            <Tooltip
+                                                contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', background: 'rgba(255,255,255,0.9)' }}
+                                            />
+                                            <Line
+                                                type="monotone"
+                                                dataKey="score"
+                                                stroke="#DFA995"
+                                                strokeWidth={3}
+                                                dot={{ r: 4, fill: '#DFA995' }}
+                                                activeDot={{ r: 6 }}
+                                            />
+                                        </LineChart>
+                                    </ResponsiveContainer>
+                                ) : (
+                                    <p className="empty-graph-text">Track your first mood to see the flow.</p>
+                                )}
+                            </div>
+                        </section>
+                    )}
                 </main>
 
-                {/* Sidebar */}
-                <aside className="mp-sidebar">
-                    <section className="mp-card">
-                        <h2 className="mp-card-title">Journey</h2>
-                        <StreakTracker
-                            streak={streak}
-                            totalCompleted={totalCompleted}
-                            weeklyCount={weeklyCount}
-                            monthlyCount={monthlyCount}
-                            justIncreased={showConfetti}
-                        />
-                    </section>
+                {/* Sidebar (Only in Grid view to reduce clutter during focus tasks?) */}
+                {view === 'grid' && (
+                    <aside className="mp-sidebar">
+                        <section className="mp-card">
+                            <h2 className="mp-card-title">Journey</h2>
+                            <StreakTracker
+                                streak={streak}
+                                totalCompleted={totalCompleted}
+                                weeklyCount={weeklyCount}
+                                monthlyCount={monthlyCount}
+                                justIncreased={showConfetti}
+                            />
+                        </section>
 
-                    <section className="mp-card" style={{ background: '#9CAF88', color: 'white' }}>
-                        <h3>Daily Wisdom 💡</h3>
-                        <p style={{ marginTop: '0.5rem', fontSize: '0.9rem', lineHeight: '1.5' }}>
-                            "Rest is not idleness, and to lie sometimes on the grass under trees on a summer's day is by no means a waste of time."
-                        </p>
-                    </section>
-                </aside>
+                        <section className="mp-card quote-card">
+                            <h3>Daily Wisdom 💡</h3>
+                            <p>"Rest is not idleness, and to lie sometimes on the grass under trees on a summer's day is by no means a waste of time."</p>
+                        </section>
+                    </aside>
+                )}
             </div>
 
-            {/* AI Chat FAB */}
             <button className="ai-fab" onClick={() => setIsChatOpen(true)}>
                 💭
             </button>
 
-            {/* AI Modal */}
             <AIChatModal isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
         </div>
     );

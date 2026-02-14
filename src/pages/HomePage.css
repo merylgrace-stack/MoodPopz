@@ -1,130 +1,169 @@
-/* HomePage.css */
+/* HomePage.css - Vintage Redesign */
+:root {
+    --vintage-cream: #F9F5F0;
+    --vintage-brown: #5D4037;
+    --vintage-orange: #DFA995;
+    --vintage-sage: #9CAF88;
+    --vintage-text: #3E2723;
+}
+
 .home-container {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    text-align: center;
-    padding: 2rem;
-    background: var(--bg-gradient);
+    background-color: var(--vintage-cream);
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23dcbba8' fill-opacity='0.15' fill-rule='evenodd'/%3E%3C/svg%3E");
     position: relative;
     overflow: hidden;
+    color: var(--vintage-text);
 }
 
-.home-title {
-    font-family: "Outfit", sans-serif;
-    font-size: 4rem;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 1rem;
-    z-index: 10;
-    text-shadow: 2px 2px 0px var(--terracotta);
-    animation: fadeInDown 1s ease-out;
+/* Vintage Frame Effect */
+.vintage-frame {
+    border: 2px solid var(--vintage-orange);
+    padding: 3rem;
+    max-width: 800px;
+    width: 90%;
+    position: relative;
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(2px);
+    box-shadow:
+        inset 0 0 40px rgba(223, 169, 149, 0.2),
+        0 10px 40px rgba(93, 64, 55, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 4px;
+    /* Slightly rounded, but boxy like a card */
 }
 
-.home-subtitle {
-    font-family: "Inter", sans-serif;
-    font-size: 1.5rem;
-    color: var(--text-soft);
-    margin-bottom: 3rem;
-    max-width: 600px;
-    z-index: 10;
+/* Corner Accents */
+.vintage-frame::before,
+.vintage-frame::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--vintage-brown);
+    transition: all 0.5s ease;
+}
+
+.vintage-frame::before {
+    top: 10px;
+    left: 10px;
+    border-right: none;
+    border-bottom: none;
+}
+
+.vintage-frame::after {
+    bottom: 10px;
+    right: 10px;
+    border-left: none;
+    border-top: none;
+}
+
+.home-header {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.brand-title {
+    font-family: "Playfair Display", serif;
+    /* Or system serif */
+    font-size: 3.5rem;
+    letter-spacing: 2px;
+    color: var(--vintage-brown);
+    margin-bottom: 0.5rem;
+}
+
+.sep-line {
+    width: 60px;
+    height: 2px;
+    background: var(--vintage-orange);
+    margin: 0 auto;
+}
+
+.hero-quote {
+    font-family: "Georgia", serif;
+    font-style: italic;
+    font-size: 1.8rem;
     line-height: 1.6;
-    animation: fadeInUp 1s ease-out 0.5s both;
+    color: #4E342E;
+    max-width: 600px;
+    margin: 0 auto 3rem auto;
+    text-align: center;
 }
 
-.enter-btn {
-    background: var(--terracotta);
-    color: var(--cream);
+.begin-btn {
+    background: var(--vintage-brown);
+    color: var(--vintage-cream);
     font-family: "Outfit", sans-serif;
     font-size: 1.2rem;
-    padding: 1rem 3rem;
-    border: none;
-    border-radius: var(--radius);
+    padding: 1rem 3.5rem;
+    border: 1px solid var(--vintage-brown);
+    border-radius: 50px;
     cursor: pointer;
-    box-shadow: var(--shadow);
-    transition: var(--transition);
-    z-index: 10;
-    animation: fadeInUp 1s ease-out 1s both;
+    letter-spacing: 1px;
+    transition: all 0.4s ease;
+    text-transform: uppercase;
+    font-weight: 500;
 }
 
-.enter-btn:hover {
-    transform: translateY(-5px);
-    background: #c08b7a;
-    box-shadow: 0 15px 30px rgba(223, 169, 149, 0.4);
+.begin-btn:hover {
+    background: transparent;
+    color: var(--vintage-brown);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(93, 64, 55, 0.1);
 }
 
-.floating-shape-home {
+.home-footer-text {
+    margin-top: 3rem;
+    font-size: 0.9rem;
+    color: #8D6E63;
+    font-family: "Courier New", monospace;
+    letter-spacing: 1px;
+}
+
+/* Decorative Stickers */
+.vintage-decor {
     position: absolute;
+    font-size: 2.5rem;
     opacity: 0.6;
-    filter: blur(40px);
-    z-index: 1;
-    animation: float 6s ease-in-out infinite;
+    filter: sepia(0.5);
+    animation: sway 6s ease-in-out infinite;
+    z-index: 10;
 }
 
-.shape-1 {
-    width: 300px;
-    height: 300px;
-    background: var(--terracotta);
-    top: -50px;
-    left: -50px;
-    border-radius: 50%;
+.leaf-1 {
+    top: 10%;
+    right: 10%;
     animation-delay: 0s;
 }
 
-.shape-2 {
-    width: 250px;
-    height: 250px;
-    background: var(--sage-green);
-    bottom: 10%;
-    right: -50px;
-    border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
-    animation-delay: 2s;
-}
-
-.shape-3 {
-    width: 150px;
-    height: 150px;
-    background: var(--soft-blue);
-    top: 40%;
+.leaf-2 {
+    bottom: 15%;
     left: 10%;
-    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-    animation-delay: 4s;
+    animation-delay: 2s;
+    font-size: 2rem;
 }
 
-@keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.leaf-3 {
+    top: 20%;
+    left: 15%;
+    animation-delay: 1s;
+    font-size: 1.5rem;
 }
 
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes float {
+@keyframes sway {
 
     0%,
     100% {
-        transform: translateY(0);
+        transform: rotate(-5deg);
     }
 
     50% {
-        transform: translateY(-20px);
+        transform: rotate(5deg);
     }
 }
