@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import Confetti from './Confetti'
 import TaskActionContent from './TaskActionContent'
 import { playChime } from '../utils/sound'
 import './SingleTaskView.css'
@@ -11,7 +10,6 @@ export default function SingleTaskView({
   onBack,
   onReset,
 }) {
-  const [confettiTrigger, setConfettiTrigger] = useState(0)
   const [soundEnabled] = useState(() => {
     try {
       return localStorage.getItem('moodpop_sound') !== 'false'
@@ -21,14 +19,12 @@ export default function SingleTaskView({
   })
 
   function handleDone() {
-    setConfettiTrigger((t) => t + 1)
     if (soundEnabled) playChime()
     onTaskDone?.()
   }
 
   return (
     <main id="main" className="breath-task-view" role="main">
-      <Confetti trigger={confettiTrigger} />
       <button className="breath-btn breath-back" onClick={onBack} aria-label="Back">
         Back
       </button>

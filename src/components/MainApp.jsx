@@ -13,6 +13,7 @@ import SettingsDrawer from './SettingsDrawer'
 import LoginPage from './LoginPage'
 import InsightsView from './InsightsView'
 import AIChatModal from './AIChatModal'
+import Confetti from './Confetti'
 import './MainApp.css'
 
 export default function MainApp({ onReset, initialMood }) {
@@ -23,6 +24,7 @@ export default function MainApp({ onReset, initialMood }) {
     initialMood ? (TASKS[initialMood.id] || []) : []
   )
   const [spinKey, setSpinKey] = useState(0)
+  const [confettiTrigger, setConfettiTrigger] = useState(0)
   const [selectedTask, setSelectedTask] = useState(null)
   const [quote, setQuote] = useState('')
   const [settingsOpen, setSettingsOpen] = useState(false)
@@ -91,6 +93,7 @@ export default function MainApp({ onReset, initialMood }) {
 
   function handleTaskDone() {
     recordCompletion()
+    setConfettiTrigger((c) => c + 1)
     setQuote(QUOTES[Math.floor(Math.random() * QUOTES.length)])
     setPhase('quote')
   }
@@ -108,6 +111,8 @@ export default function MainApp({ onReset, initialMood }) {
     />
   )
 
+  const globalConfetti = <Confetti trigger={confettiTrigger} />
+
   if (!isLoggedIn) {
     return <LoginPage onLogin={handleLogin} />
   }
@@ -123,6 +128,7 @@ export default function MainApp({ onReset, initialMood }) {
           onTriggerCheckIn={() => setShowAIChat(true)}
         />
         {chatModal}
+        {globalConfetti}
       </>
     )
   }
@@ -142,6 +148,7 @@ export default function MainApp({ onReset, initialMood }) {
           onReset={onReset}
         />
         {chatModal}
+        {globalConfetti}
       </>
     )
   }
@@ -162,6 +169,7 @@ export default function MainApp({ onReset, initialMood }) {
           onReset={onReset}
         />
         {chatModal}
+        {globalConfetti}
       </>
     )
   }
@@ -196,6 +204,7 @@ export default function MainApp({ onReset, initialMood }) {
           </div>
         </main>
         {chatModal}
+        {globalConfetti}
       </>
     )
   }
@@ -255,6 +264,7 @@ export default function MainApp({ onReset, initialMood }) {
         }}
       />
       {chatModal}
+      {globalConfetti}
     </main>
   )
 }
