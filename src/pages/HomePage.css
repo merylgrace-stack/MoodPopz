@@ -1,0 +1,130 @@
+/* HomePage.css */
+.home-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    background: var(--bg-gradient);
+    position: relative;
+    overflow: hidden;
+}
+
+.home-title {
+    font-family: "Outfit", sans-serif;
+    font-size: 4rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 1rem;
+    z-index: 10;
+    text-shadow: 2px 2px 0px var(--terracotta);
+    animation: fadeInDown 1s ease-out;
+}
+
+.home-subtitle {
+    font-family: "Inter", sans-serif;
+    font-size: 1.5rem;
+    color: var(--text-soft);
+    margin-bottom: 3rem;
+    max-width: 600px;
+    z-index: 10;
+    line-height: 1.6;
+    animation: fadeInUp 1s ease-out 0.5s both;
+}
+
+.enter-btn {
+    background: var(--terracotta);
+    color: var(--cream);
+    font-family: "Outfit", sans-serif;
+    font-size: 1.2rem;
+    padding: 1rem 3rem;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    z-index: 10;
+    animation: fadeInUp 1s ease-out 1s both;
+}
+
+.enter-btn:hover {
+    transform: translateY(-5px);
+    background: #c08b7a;
+    box-shadow: 0 15px 30px rgba(223, 169, 149, 0.4);
+}
+
+.floating-shape-home {
+    position: absolute;
+    opacity: 0.6;
+    filter: blur(40px);
+    z-index: 1;
+    animation: float 6s ease-in-out infinite;
+}
+
+.shape-1 {
+    width: 300px;
+    height: 300px;
+    background: var(--terracotta);
+    top: -50px;
+    left: -50px;
+    border-radius: 50%;
+    animation-delay: 0s;
+}
+
+.shape-2 {
+    width: 250px;
+    height: 250px;
+    background: var(--sage-green);
+    bottom: 10%;
+    right: -50px;
+    border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+    animation-delay: 2s;
+}
+
+.shape-3 {
+    width: 150px;
+    height: 150px;
+    background: var(--soft-blue);
+    top: 40%;
+    left: 10%;
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    animation-delay: 4s;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+}
